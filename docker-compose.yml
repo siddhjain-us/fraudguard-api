@@ -1,0 +1,47 @@
+services:
+  # ── FastAPI Application ─────────────────────────────────────
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://fraudguard:fraudguard@postgres:5432/fraudguard
+      - REDIS_URL=redis://redis:6379/0
+      - MODEL_DIR=/app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── PostgreSQL (prediction logging) ─────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fraudguard
+      POSTGRES_USER: fraudguard
+      POSTGRES_PASSWORD: fraudguard
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fraudguard"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── Redis (prediction caching) ──────────────────────────────
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:

@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fraudguard-config
+data:
+  MODEL_DIR: "/app/models"

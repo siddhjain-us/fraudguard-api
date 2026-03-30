@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraudguard-api
+  labels:
+    app: fraudguard-api
+spec:
+  type: LoadBalancer
+  selector:
+    app: fraudguard-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+      name: http
