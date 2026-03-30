@@ -10,16 +10,18 @@ env:
   DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/fraudguard-api
 
 jobs:
-  # ── Lint & Test ───────────────────────────────────────────────
+# ── Lint & Test ───────────────────────────────────────────────
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: |
