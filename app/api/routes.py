@@ -3,7 +3,6 @@ API routes for the FraudGuard prediction service.
 """
 
 import hashlib
-import json
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException

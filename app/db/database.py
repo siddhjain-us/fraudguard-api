@@ -5,7 +5,6 @@ Uses asyncpg for async database operations.
 
 import os
 import json
-from datetime import datetime, timezone
 
 # Optional: gracefully degrade if asyncpg not available (for testing)
 try:

@@ -7,7 +7,6 @@ import pytest
 from unittest.mock import patch, AsyncMock
 from fastapi.testclient import TestClient
 
-from app.ml.model import PredictionResult
 
 
 # Mock DB and cache so tests don't need Postgres/Redis
